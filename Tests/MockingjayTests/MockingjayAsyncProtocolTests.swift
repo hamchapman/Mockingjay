@@ -63,9 +63,9 @@ class MockingjayAsyncProtocolTests: XCTestCase, URLSessionDataDelegate  {
     let request = URLRequest(url: URL(string: "https://fuller.li/")!)
     let path = Bundle(for: self.classForCoder).path(forResource: "TestAudio", ofType: "m4a")
     let data = try! Data(contentsOf: URL(fileURLWithPath: path!))
-    
+
     let stubResponse = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "1.1", headerFields: ["Content-Length" : String(data.count)])!
-    
+
     MockingjayProtocol.addStub(matcher: { (requestedRequest) -> (Bool) in
       return true
     }) { (request) -> (Response) in
@@ -74,7 +74,7 @@ class MockingjayAsyncProtocolTests: XCTestCase, URLSessionDataDelegate  {
     let urlSession = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: OperationQueue.current)
     let dataTask = urlSession.dataTask(with: request)
     dataTask.resume()
-    
+
     let mutableData = NSMutableData()
     while mutableData.length < data.count {
       let expectation = self.expectation(description: "testProtocolCanReturnedDataInChunks")
@@ -86,7 +86,7 @@ class MockingjayAsyncProtocolTests: XCTestCase, URLSessionDataDelegate  {
     }
     XCTAssertEqual(mutableData as Data, data)
   }
-  
+
   func testByteRanges() {
     let length = 100000
     var request = URLRequest(url: URL(string: "https://fuller.li/")!)

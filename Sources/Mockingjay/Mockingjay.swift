@@ -19,6 +19,9 @@ public enum Download: ExpressibleByNilLiteral, Equatable {
   // Simulate download as byte stream
   case streamContent(data:Data, inChunksOf:Int)
 
+  // Simulate a stream of subscription events
+  case streamSubscription(events: [SubscriptionEvent])
+
   // Simulate empty download
   case noContent
 }
@@ -29,6 +32,8 @@ public func ==(lhs:Download, rhs:Download) -> Bool {
     return (lhsData == rhsData)
   case let (.streamContent(data:lhsData, inChunksOf:lhsBytes), .streamContent(data:rhsData, inChunksOf:rhsBytes)):
     return (lhsData == rhsData) && lhsBytes == rhsBytes
+  case let (.streamSubscription(lhsEvents), .streamSubscription(rhsEvents)):
+    return lhsEvents == rhsEvents
   case (.noContent, .noContent):
     return true
   default:

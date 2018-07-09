@@ -9,6 +9,16 @@
 import Foundation
 
 
+public struct SubscriptionEvent: Equatable {
+  let data: Data
+  let delay: TimeInterval?
+
+  public init(data: Data, delay: TimeInterval? = nil) {
+    self.data = data
+    self.delay = delay
+  }
+}
+
 /// Structure representing a registered stub
 public struct Stub : Equatable {
   let matcher:Matcher
@@ -82,11 +92,11 @@ public class MockingjayProtocol: URLProtocol {
   override open class func canInit(with request:URLRequest) -> Bool {
     return stubForRequest(request) != nil
   }
-  
+
   override open class func canonicalRequest(for request: URLRequest) -> URLRequest {
     return request
   }
-  
+
   override open func startLoading() {
     if let stub = MockingjayProtocol.stubForRequest(request) {
       let response = stub.builder(request)
@@ -126,9 +136,39 @@ public class MockingjayProtocol: URLProtocol {
         applyRangeFromHTTPHeaders(headers, toData: &data, andUpdateResponse: &response)
         self.download(data, inChunksOfBytes: bytes)
         return
+      case .streamSubscription(let events):
+        if let r = response as? HTTPURLResponse {
+          var header = r.allHeaderFields as! [String:String]
+          header["Content-Type"] = "text/vnd.pusher.events+json"
+          response = HTTPURLResponse(url: r.url!, statusCode: r.statusCode, httpVersion: nil, headerFields: header)!
+        }
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        self.operationQueue.maxConcurrentOperationCount = 1
+        self.operationQueue.addOperation {
+          self.stream(events)
+        }
+        return
       case .noContent:
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         client?.urlProtocolDidFinishLoading(self)
+      }
+    }
+  }
+
+  fileprivate func stream(_ subscriptionEvents: [SubscriptionEvent]) {
+    guard subscriptionEvents.count > 0 else {
+      client?.urlProtocolDidFinishLoading(self)
+      return
+    }
+
+    guard let queue = OperationQueue.current else {
+      return
+    }
+
+    subscriptionEvents.forEach { event in
+      queue.addOperation {
+        self.client?.urlProtocol(self, didLoad: event.data)
+        Thread.sleep(forTimeInterval: event.delay ?? 0.01)
       }
     }
   }
@@ -191,7 +231,7 @@ public class MockingjayProtocol: URLProtocol {
     
       let fullLength = data.count
       data = data.subdata(in: range)
-      
+
       //Attach new headers to response
       if let r = response as? HTTPURLResponse {
         var header = r.allHeaderFields as! [String:String]
@@ -199,7 +239,7 @@ public class MockingjayProtocol: URLProtocol {
         header["Content-Range"] = "bytes \(range.lowerBound)-\(range.upperBound)/\(fullLength)"
         response = HTTPURLResponse(url: r.url!, statusCode: r.statusCode, httpVersion: nil, headerFields: header)!
       }
-      
+
       client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
   }
 
