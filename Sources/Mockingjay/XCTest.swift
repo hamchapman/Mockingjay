@@ -7,6 +7,8 @@
 //
 
 import ObjectiveC
+
+#if !os(watchOS)
 import XCTest
 
 let swizzleTearDown: Void = {
@@ -61,3 +63,4 @@ extension XCTest {
     }
   }
 }
+#endif
