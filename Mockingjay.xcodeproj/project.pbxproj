@@ -20,6 +20,7 @@
 		2746CDCB1A702F7800719B66 /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2746CDBF1A702F7800719B66 /* Mockingjay.framework */; };
 		2746CDD21A702F7800719B66 /* MockingjayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2746CDD11A702F7800719B66 /* MockingjayTests.swift */; };
 		27703A631CE2560600194732 /* MockingjayURLSessionConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27703A621CE2560600194732 /* MockingjayURLSessionConfiguration.m */; };
+		333D861620F4A68A00734402 /* URITemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333D861520F4A68A00734402 /* URITemplate.swift */; };
 		33E2BB3D20EE6DC7006E0A60 /* SubscriptionRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E2BB3C20EE6DC7006E0A60 /* SubscriptionRequestTests.swift */; };
 		444EA6091C5261DE000C3A9F /* MockingjayAsyncProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EA6081C5261DE000C3A9F /* MockingjayAsyncProtocolTests.swift */; };
 		444EA60C1C52666D000C3A9F /* TestAudio.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 444EA60B1C52666D000C3A9F /* TestAudio.m4a */; };
@@ -33,41 +34,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2746CDBE1A702F7800719B66;
 			remoteInfo = Mockingjay;
-		};
-		33E2BB2B20ED3624006E0A60 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33E2BB2020ED3624006E0A60 /* URITemplate.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = "PathKit::PathKit::Product";
-			remoteInfo = PathKit;
-		};
-		33E2BB2D20ED3624006E0A60 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33E2BB2020ED3624006E0A60 /* URITemplate.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = "Spectre::Spectre::Product";
-			remoteInfo = Spectre;
-		};
-		33E2BB2F20ED3624006E0A60 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33E2BB2020ED3624006E0A60 /* URITemplate.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = "URITemplate::URITemplate::Product";
-			remoteInfo = URITemplate;
-		};
-		33E2BB3120ED3624006E0A60 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33E2BB2020ED3624006E0A60 /* URITemplate.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = "URITemplate::URITemplateTests::Product";
-			remoteInfo = URITemplateTests;
-		};
-		33E2BB3A20ED3651006E0A60 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33E2BB2020ED3624006E0A60 /* URITemplate.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = "URITemplate::URITemplate";
-			remoteInfo = URITemplate;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -92,7 +58,7 @@
 		2746CDDD1A702FC100719B66 /* UniversalFramework_Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UniversalFramework_Framework.xcconfig; sourceTree = "<group>"; };
 		2746CDDE1A702FC100719B66 /* UniversalFramework_Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UniversalFramework_Test.xcconfig; sourceTree = "<group>"; };
 		27703A621CE2560600194732 /* MockingjayURLSessionConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockingjayURLSessionConfiguration.m; sourceTree = "<group>"; };
-		33E2BB2020ED3624006E0A60 /* URITemplate.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = URITemplate.xcodeproj; path = URITemplate/URITemplate.xcodeproj; sourceTree = "<group>"; };
+		333D861520F4A68A00734402 /* URITemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URITemplate.swift; sourceTree = "<group>"; };
 		33E2BB3C20EE6DC7006E0A60 /* SubscriptionRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRequestTests.swift; sourceTree = "<group>"; };
 		444EA6081C5261DE000C3A9F /* MockingjayAsyncProtocolTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockingjayAsyncProtocolTests.swift; sourceTree = "<group>"; };
 		444EA60B1C52666D000C3A9F /* TestAudio.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestAudio.m4a; sourceTree = "<group>"; };
@@ -120,7 +86,6 @@
 		2746CDB51A702F7800719B66 = {
 			isa = PBXGroup;
 			children = (
-				33E2BB2020ED3624006E0A60 /* URITemplate.xcodeproj */,
 				2746CDDB1A702FC100719B66 /* Configurations */,
 				2746CDC11A702F7800719B66 /* Mockingjay */,
 				2746CDCE1A702F7800719B66 /* MockingjayTests */,
@@ -149,6 +114,7 @@
 				274367931AA27AAD0030C97B /* MockingjayProtocol.swift */,
 				2743679B1AA28D4D0030C97B /* XCTest.swift */,
 				274367C51AA35FD00030C97B /* NSURLSessionConfiguration.swift */,
+				333D861520F4A68A00734402 /* URITemplate.swift */,
 				27703A621CE2560600194732 /* MockingjayURLSessionConfiguration.m */,
 				2746CDC21A702F7800719B66 /* Supporting Files */,
 			);
@@ -199,17 +165,6 @@
 			path = Configurations;
 			sourceTree = "<group>";
 		};
-		33E2BB2120ED3624006E0A60 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				33E2BB2C20ED3624006E0A60 /* PathKit.framework */,
-				33E2BB2E20ED3624006E0A60 /* Spectre.framework */,
-				33E2BB3020ED3624006E0A60 /* URITemplate.framework */,
-				33E2BB3220ED3624006E0A60 /* URITemplateTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		444EA60D1C526673000C3A9F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,7 +199,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				33E2BB3B20ED3651006E0A60 /* PBXTargetDependency */,
 			);
 			name = Mockingjay;
 			productName = Mockingjay;
@@ -300,12 +254,6 @@
 			mainGroup = 2746CDB51A702F7800719B66;
 			productRefGroup = 2746CDC01A702F7800719B66 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 33E2BB2120ED3624006E0A60 /* Products */;
-					ProjectRef = 33E2BB2020ED3624006E0A60 /* URITemplate.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				2746CDBE1A702F7800719B66 /* Mockingjay */,
@@ -313,37 +261,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		33E2BB2C20ED3624006E0A60 /* PathKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PathKit.framework;
-			remoteRef = 33E2BB2B20ED3624006E0A60 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		33E2BB2E20ED3624006E0A60 /* Spectre.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Spectre.framework;
-			remoteRef = 33E2BB2D20ED3624006E0A60 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		33E2BB3020ED3624006E0A60 /* URITemplate.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = URITemplate.framework;
-			remoteRef = 33E2BB2F20ED3624006E0A60 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		33E2BB3220ED3624006E0A60 /* URITemplateTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = file;
-			path = URITemplateTests.xctest;
-			remoteRef = 33E2BB3120ED3624006E0A60 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		2746CDBD1A702F7800719B66 /* Resources */ = {
@@ -368,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				333D861620F4A68A00734402 /* URITemplate.swift in Sources */,
 				274367981AA28AFC0030C97B /* Matchers.swift in Sources */,
 				27703A631CE2560600194732 /* MockingjayURLSessionConfiguration.m in Sources */,
 				274367921AA27A7C0030C97B /* Mockingjay.swift in Sources */,
@@ -399,11 +317,6 @@
 			isa = PBXTargetDependency;
 			target = 2746CDBE1A702F7800719B66 /* Mockingjay */;
 			targetProxy = 2746CDCC1A702F7800719B66 /* PBXContainerItemProxy */;
-		};
-		33E2BB3B20ED3651006E0A60 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = URITemplate;
-			targetProxy = 33E2BB3A20ED3651006E0A60 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
