@@ -167,8 +167,10 @@ public class MockingjayProtocol: URLProtocol {
 
     subscriptionEvents.forEach { event in
       queue.addOperation {
+        if let delay = event.delay {
+            Thread.sleep(forTimeInterval: delay)
+        }
         self.client?.urlProtocol(self, didLoad: event.data)
-        Thread.sleep(forTimeInterval: event.delay ?? 0.01)
       }
     }
   }

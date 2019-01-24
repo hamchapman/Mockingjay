@@ -36,10 +36,14 @@ class SubscriptionRequestTests: XCTestCase, URLSessionDataDelegate, URLSessionTa
 
     let stubResponse = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
 
+    let keepAliveData = "[0, \"xxxxxxxxxxxxxxxxxxxxxxxxxxxx\"]\n".data(using: .utf8)!
+    let normalEventData = "[1, \"123\", {}, {\"data\": [1,2,3]}]\n".data(using: .utf8)!
+    let eosData = "[255, 500, {}, {\"error_description\": \"Internal server error\" }]\n".data(using: .utf8)!
+
     let subEvents = [
-      SubscriptionEvent(data: "[0, \"xxxxxxxxxxxxxxxxxxxxxxxxxxxx\"]\n".data(using: .utf8)!), // Keep-alive
-      SubscriptionEvent(data: "[255, 500, {}, {\"error_description\": \"Internal server error\" }]\n".data(using: .utf8)!), // EOS
-      SubscriptionEvent(data: "[1, \"123\", {}, {\"data\": [1,2,3]}]\n".data(using: .utf8)!) // Data
+      SubscriptionEvent(data: keepAliveData),
+      SubscriptionEvent(data: normalEventData, delay: 0.5),
+      SubscriptionEvent(data: eosData, delay: 0.5)
     ]
 
     MockingjayProtocol.addStub(matcher: { requestedRequest -> Bool in
@@ -52,27 +56,27 @@ class SubscriptionRequestTests: XCTestCase, URLSessionDataDelegate, URLSessionTa
     let dataTask = urlSession.dataTask(with: request)
     dataTask.resume()
 
-    let expectation = self.expectation(description: "subscription events all received")
+    let keepAliveDataEx = self.expectation(description: "keep alive data received")
+    let normalEventDataEx = self.expectation(description: "normal data received")
+    let eosDataEx = self.expectation(description: "EOS data received")
 
     self.didReceiveDataHandler = { (session: Foundation.URLSession, dataTask: URLSessionDataTask, data: Data) in
-      print("DID RECEIVE DATA: \(String(data: data, encoding: .utf8))")
+      if data == keepAliveData {
+        keepAliveDataEx.fulfill()
+      } else if data == normalEventData {
+        normalEventDataEx.fulfill()
+      } else if data == eosData {
+        eosDataEx.fulfill()
+      } else {
+        XCTFail("Unexpected data recevied")
+      }
     }
 
-//    let mutableData = NSMutableData()
-//
-//
-//
-//    while mutableData.length < stubData.count {
-//      let expectation = self.expectation(description: "testProtocolCanReturnedDataInChunks")
-//      self.didReceiveDataHandler = { (session: Foundation.URLSession, dataTask: URLSessionDataTask, data: Data) in
-//        mutableData.append(data)
-//        expectation.fulfill()
-//      }
-//      waitForExpectations(timeout: 2.0, handler: nil)
-//    }
-//    XCTAssertEqual(mutableData as Data, stubData)
-
-    waitForExpectations(timeout: 5.0, handler: nil)
+    wait(
+      for: [keepAliveDataEx, normalEventDataEx, eosDataEx],
+      timeout: 5.0,
+      enforceOrder: true
+    )
   }
 
   // MARK: NSURLSessionDataDelegate
@@ -80,7 +84,12 @@ class SubscriptionRequestTests: XCTestCase, URLSessionDataDelegate, URLSessionTa
     self.didReceiveDataHandler?(session, dataTask, data)
   }
 
-  func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+  func urlSession(
+    _ session: URLSession,
+    dataTask: URLSessionDataTask,
+    didReceive response: URLResponse,
+    completionHandler: @escaping (URLSession.ResponseDisposition) -> Void
+  ) {
     completionHandler(.allow)
   }
 
